@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "ubunturunclub-api",
+  "main": "src/index.js",
+  "compatibility_date": "2025-01-01",
+  "vars": {
+    "STRAVA_CLIENT_ID": "267389",
+    "STRAVA_CLIENT_SECRET": "27d193d921b3889014c2ecc8b29204cc55b7dbbc",
+    "STRAVA_REFRESH_TOKEN": "81cda9349ea35882d50de6200886e436ec89ff70",
+    "STRAVA_CLUB_ID": "1895513"
+  },
+  "kv_namespaces": [
+    {
+      "binding": "STRAVA_CACHE",
+      "id": "mock-id",
+      "preview_id": "mock-preview-id"
+    }
+  ]
+}
