@@ -3,6 +3,7 @@
   "name": "ubunturunclub-api",
   "main": "src/index.js",
   "compatibility_date": "2025-01-01",
+  "workers_dev": true,
   "vars": {
     "STRAVA_CLIENT_ID": "267389",
     "STRAVA_CLIENT_SECRET": "27d193d921b3889014c2ecc8b29204cc55b7dbbc",
@@ -12,8 +13,7 @@
   "kv_namespaces": [
     {
       "binding": "STRAVA_CACHE",
-      "id": "mock-id",
-      "preview_id": "mock-preview-id"
+      "id": "7e4540f1cc2f4d1b9dff4c8ea596e1aa"
     }
   ]
 }
