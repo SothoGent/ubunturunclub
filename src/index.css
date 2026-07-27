@@ -467,7 +467,7 @@ button { font-family: inherit; cursor: pointer; }
 .kit .art { aspect-ratio: 1; display: grid; place-items: center; position: relative; }
 .kit .art svg { width: 72%; height: 72%; color: var(--bone); transition: color .3s, transform .4s; }
 .kit:hover .art svg { color: var(--flame); transform: scale(1.04); }
-.kit .art .urc-on { position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); color: #fff; opacity: .92; pointer-events: none; }
+.kit .art .urc-on { position: absolute; top: 90%; left: 75%; transform: translate(-50%, -50%); color: #fff; opacity: .92; pointer-events: none; }
 .kit .art .urc-on .urc { width: 64px; }
 .kit .art { position: relative; }
 .hero__word { line-height: 1; padding-block: 4px; }
