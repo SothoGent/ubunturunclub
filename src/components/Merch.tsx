@@ -1,39 +1,37 @@
+// src/components/Merch.tsx
 import { Logo } from "./Logo";
 import { Reveal } from "./ui";
 
-const LongSleeve = () => (
-  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round">
-    <path d="M48 22 Q60 30 72 22 L86 26 L110 40 L106 52 L86 46 L86 98 L34 98 L34 46 L14 52 L10 40 L34 26 Z" />
-    <path d="M48 22 Q60 16 72 22" opacity=".6" />
-  </svg>
-);
-const Shorts = () => (
-  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round">
-    <path d="M32 28 L88 28 L92 60 L90 96 L64 90 L60 60 L56 90 L30 96 L28 60 Z" />
-    <path d="M30 37 L90 37" opacity=".6" />
-  </svg>
-);
-const Cap = () => (
-  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round">
-    <path d="M28 66 Q28 30 60 30 Q92 30 92 66" />
-    <path d="M88 62 Q114 62 118 74 Q98 80 90 70" />
-    <path d="M26 66 L94 66" />
-    <path d="M60 30 L60 66" opacity=".4" />
-  </svg>
-);
-const Socks = () => (
-  <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" strokeWidth={3} strokeLinejoin="round" strokeLinecap="round">
-    <path d="M44 24 L70 24 L70 70 Q70 78 78 82 L92 86 Q98 90 96 98 L52 98 Q44 98 44 88 Z" />
-    <path d="M44 33 L70 33" opacity=".6" />
-    <path d="M44 42 L70 42" opacity=".6" />
-  </svg>
-);
-
 const KIT = [
-  { Art: LongSleeve, tag: "DROP 01", name: "Long-Sleeve Performance Tee", meta: "XS–XXL · dri-fit", logo: true },
-  { Art: Shorts, tag: "DROP 01", name: "2-in-1 Run Shorts", meta: "with liner · 5\"", logo: false },
-  { Art: Cap, tag: "DROP 01", name: "URC Trucker Cap", meta: "snap-back", logo: true },
-  { Art: Socks, tag: "DROP 01", name: "Cushioned Crew Socks", meta: "sold as a pair", logo: false },
+  {
+    image: "/images/ubuntuKit_tshirt(2).jpeg",
+    tag: "DROP 01",
+    name: "Performance Tee",
+    meta: "XS–XXL · dri-fit",
+    logo: true,
+  },
+  {
+    image: "/images/ubuntuKit_shorts.jpeg",
+    tag: "DROP 01",
+    name: "2-in-1 Run Shorts",
+    meta: "with liner · 5\"",
+    logo: true,
+  },
+  {
+    image: "/images/ubuntuKit_cap.jpeg",
+    tag: "DROP 01",
+    name: "URC Trucker Cap",
+    meta: "snap-back",
+    logo: true,
+  },
+  {
+    image: "/images/ubuntuKit_socks.jpeg",
+    tag: "DROP 01",
+    name: "Cushioned Crew Socks",
+    meta: "sold as a pair",
+    logo: true,
+  },
+  
 ];
 
 const GALLERY = [
@@ -65,9 +63,21 @@ export default function Merch() {
               <div className="kit" key={i} data-d={i}>
                 <span className="tag">{k.tag}</span>
                 <div className="art">
-                  <k.Art />
+                  <img
+                    src={k.image}
+                    alt={k.name}
+                    loading="lazy"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                  />
                   {k.logo && (
-                    <span className="urc-on"><Logo streaks={false} reg={false} /></span>
+                    <span className="urc-on">
+                      <Logo streaks={false} reg={false} />
+                    </span>
                   )}
                 </div>
                 <div className="name">{k.name}</div>
