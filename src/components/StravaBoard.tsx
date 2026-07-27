@@ -178,39 +178,127 @@ export default function StravaBoard() {
               <div className="leader-list" style={{ maxHeight: "600px", overflowY: "auto" }}>
                 <table className="leader-table" style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr style={{ borderBottom: "1px solid var(--line)", color: "var(--muted)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                    <tr
+                      style={{
+                        borderBottom: "1px solid var(--line)",
+                        color: "var(--muted)",
+                        fontSize: "11px",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.1em",
+                      }}
+                    >
                       <th style={{ padding: "8px 6px", textAlign: "left" }}>#</th>
                       <th style={{ padding: "8px 6px", textAlign: "left" }}>Athlete</th>
                       <th style={{ padding: "8px 6px", textAlign: "right" }}>Distance</th>
                       <th style={{ padding: "8px 6px", textAlign: "right" }}>Runs</th>
-                      <th style={{ padding: "8px 6px", textAlign: "right" }}>Longest</th>
-                      <th style={{ padding: "8px 6px", textAlign: "right" }}>Avg Pace</th>
-                      <th style={{ padding: "8px 6px", textAlign: "right" }}>Elev Gain</th>
+                      <th className="hide-mobile" style={{ padding: "8px 6px", textAlign: "right" }}>Longest</th>
+                      <th className="hide-mobile" style={{ padding: "8px 6px", textAlign: "right" }}>Avg Pace</th>
+                      <th className="hide-mobile" style={{ padding: "8px 6px", textAlign: "right" }}>Elev Gain</th>
                     </tr>
                   </thead>
                   <tbody>
                     {sortedLeaders.map((leader, index) => (
-                      <tr key={leader.id} className={index === 0 ? "leader-row--top" : ""} style={{ borderBottom: "1px solid rgba(42,45,53,.5)" }}>
-                        <td style={{ padding: "10px 6px", fontFamily: "var(--mono)", fontSize: "12px", color: index === 0 ? "var(--gold)" : "var(--muted)" }}>
+                      <tr
+                        key={leader.id}
+                        className={index === 0 ? "leader-row--top" : ""}
+                        style={{ borderBottom: "1px solid rgba(42,45,53,.5)" }}
+                      >
+                        <td
+                          style={{
+                            padding: "10px 6px",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: index === 0 ? "var(--gold)" : "var(--muted)",
+                          }}
+                        >
                           {String(index + 1).padStart(2, "0")}
                         </td>
+
                         <td style={{ padding: "10px 6px", display: "flex", alignItems: "center", gap: "10px" }}>
-                          {leader.avatar ? <img src={leader.avatar} alt="" className="leader-avatar" style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover" }} /> : <span className="leader-avatar leader-avatar--blank" style={{ width: "28px", height: "28px", borderRadius: "50%", border: "1px solid var(--line)", display: "inline-block" }} />}
-                          <span style={{ fontWeight: index === 0 ? "600" : "normal", color: "var(--bone)" }}>{leader.name}</span>
+                          {leader.avatar ? (
+                            <img
+                              src={leader.avatar}
+                              alt=""
+                              className="leader-avatar"
+                              style={{ width: "28px", height: "28px", borderRadius: "50%", objectFit: "cover" }}
+                            />
+                          ) : (
+                            <span
+                              className="leader-avatar leader-avatar--blank"
+                              style={{
+                                width: "28px",
+                                height: "28px",
+                                borderRadius: "50%",
+                                border: "1px solid var(--line)",
+                                display: "inline-block",
+                              }}
+                            />
+                          )}
+                          <span style={{ fontWeight: index === 0 ? "600" : "normal", color: "var(--bone)" }}>
+                            {leader.name}
+                          </span>
                         </td>
-                        <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "var(--mono)", fontSize: "12px", color: "var(--gold)" }}>
+
+                        <td
+                          style={{
+                            padding: "10px 6px",
+                            textAlign: "right",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: "var(--gold)",
+                          }}
+                        >
                           {formatDistance(leader.distance)}
                         </td>
-                        <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "var(--mono)", fontSize: "12px", color: "var(--bone)" }}>
+
+                        <td
+                          style={{
+                            padding: "10px 6px",
+                            textAlign: "right",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: "var(--bone)",
+                          }}
+                        >
                           {leader.activities}
                         </td>
-                        <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "var(--mono)", fontSize: "12px", color: "var(--bone)" }}>
+
+                        <td
+                          className="hide-mobile"
+                          style={{
+                            padding: "10px 6px",
+                            textAlign: "right",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: "var(--bone)",
+                          }}
+                        >
                           {formatDistance(leader.longestRun)}
                         </td>
-                        <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "var(--mono)", fontSize: "12px", color: "var(--bone)" }}>
+
+                        <td
+                          className="hide-mobile"
+                          style={{
+                            padding: "10px 6px",
+                            textAlign: "right",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: "var(--bone)",
+                          }}
+                        >
                           {formatPace(leader.avgPace)}
                         </td>
-                        <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "var(--mono)", fontSize: "12px", color: "var(--bone)" }}>
+
+                        <td
+                          className="hide-mobile"
+                          style={{
+                            padding: "10px 6px",
+                            textAlign: "right",
+                            fontFamily: "var(--mono)",
+                            fontSize: "12px",
+                            color: "var(--bone)",
+                          }}
+                        >
                           {formatElevation(leader.totalElevation)}
                         </td>
                       </tr>

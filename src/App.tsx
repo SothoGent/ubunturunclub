@@ -32,31 +32,73 @@ const TICKER_B = [
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const clock = useCatClock();
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 28);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   return (
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <a href="#top" aria-label="Ubuntu Run Club home" style={{ color: "#fff" }}>
         <Logo reg={false} />
       </a>
-      <div className="nav-links">
+
+      {/* Desktop nav links */}
+      <div className="nav-links desktop-only">
         {NAV.map((n) => (
           <a key={n.h} href={n.h}>{n.t}</a>
         ))}
       </div>
+
       <div className="nav-right">
-        <span className="clock">BYO <b>{clock || "--:--:--"}</b> CAT</span>
+        <span className="clock hide-mobile">
+          BYO <b>{clock || "--:--:--"}</b> CAT
+        </span>
+        <button
+          className="hamburger"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className={`hamburger-line ${menuOpen ? "open" : ""}`} />
+          <span className={`hamburger-line ${menuOpen ? "open" : ""}`} />
+          <span className={`hamburger-line ${menuOpen ? "open" : ""}`} />
+        </button>
         <Magnetic>
-          <a className="btn" href="https://www.strava.com/clubs/1895513" target="_blank" rel="noreferrer" style={{ padding: "11px 18px" }}>
-            Join Saturday <span className="ar">→</span>
+          <a
+            className="btn"
+            href="https://www.strava.com/clubs/1895513"
+            target="_blank"
+            rel="noreferrer"
+            style={{ padding: "11px 18px" }}
+          >
+            Join <span className="ar">→</span>
           </a>
         </Magnetic>
       </div>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          {NAV.map((n) => (
+            <a key={n.h} href={n.h} onClick={() => setMenuOpen(false)}>
+              {n.t}
+            </a>
+          ))}
+          <a
+            href="https://www.strava.com/clubs/1895513"
+            target="_blank"
+            rel="noreferrer"
+            className="btn mobile-join"
+          >
+            Join Saturday →
+          </a>
+        </div>
+      )}
     </nav>
   );
 }
