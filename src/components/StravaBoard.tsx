@@ -17,7 +17,7 @@ type Leader = {
   activities: number;
   longestRun: number;
   totalElevation: number;
-  avgPace: number; // seconds per km
+  avgPace: number;
 };
 
 type ApiResponse = {
@@ -63,38 +63,37 @@ export default function StravaBoard() {
   const [sortBy, setSortBy] = useState<Metric>("distance");
 
   const fetchData = async (selectedPeriod: Period) => {
-  setLoading(true);
-  try {
-    const url = `${API_BASE}?period=${selectedPeriod}`;
-    console.log('Fetching:', url); // debug
-    const res = await fetch(url);
-    console.log('Response status:', res.status); // debug
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data: ApiResponse = await res.json();
-    console.log('Data received:', data); // debug
-    setClub(data.club);
-    setLeaders(data.leaders);
-    setStats(data.stats);
-    setError("");
-  } catch (err) {
-    console.error('Fetch error:', err); // debug
-    setError("Could not load leaderboard. Please try again.");
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    try {
+      const url = `${API_BASE}?period=${selectedPeriod}`;
+      console.log("Fetching:", url);
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data: ApiResponse = await res.json();
+      console.log("Data received:", data);
+      setClub(data.club);
+      setLeaders(data.leaders || []);
+      setStats(data.stats);
+      setError("");
+    } catch (err) {
+      console.error("Fetch error:", err);
+      setError("Could not load leaderboard. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchData(period);
   }, [period]);
 
-  // Sort leaders
+  // Sort leaders based on selected metric
   const sortedLeaders = [...leaders].sort((a, b) => {
-    let aVal, bVal;
+    let aVal: number, bVal: number;
     if (sortBy === "distance") { aVal = a.distance; bVal = b.distance; }
     else if (sortBy === "time") { aVal = a.time; bVal = b.time; }
     else if (sortBy === "elevation") { aVal = a.totalElevation; bVal = b.totalElevation; }
-    else if (sortBy === "runs") { aVal = a.activities; bVal = b.activities; }
+    else { aVal = a.activities; bVal = b.activities; }
     return bVal - aVal;
   });
 
@@ -109,6 +108,21 @@ export default function StravaBoard() {
       </section>
     );
   }
+
+  if (error) {
+    return (
+      <section className="section strava-board" id="leaderboard">
+        <div className="shell">
+          <div className="strava-results" style={{ padding: "60px 20px", textAlign: "center" }}>
+            <div style={{ fontFamily: "var(--mono)", color: "var(--flame)" }}>{error}</div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const hasLeaders = leaders.length > 0;
+  const memberCount = club?.member_count ?? "—";
 
   return (
     <section className="section strava-board" id="leaderboard">
@@ -125,7 +139,7 @@ export default function StravaBoard() {
 
         <Reveal className="strava-intro">
           <div>
-            <span className="eyebrow">Ubuntu Run Club · {club?.member_count ?? "—"} members</span>
+            <span className="eyebrow">Ubuntu Run Club · {memberCount} members</span>
             <p>
               Ranked by running distance, total time, elevation, or number of runs. Updated automatically from Strava.
             </p>
@@ -140,11 +154,11 @@ export default function StravaBoard() {
         <div className="strava-grid" style={{ gridTemplateColumns: "1fr" }}>
           <Reveal className="strava-results">
             <div className="board-toolbar">
-              <div className="period-switch" role="tablist" aria-label="Leaderboard period">
+              <div className="period-switch" role="tablist">
                 <button className={period === "week" ? "on" : ""} onClick={() => setPeriod("week")}>This week</button>
                 <button className={period === "recent" ? "on" : ""} onClick={() => setPeriod("recent")}>All time</button>
               </div>
-              <div className="metric-switch" role="tablist" aria-label="Sort by">
+              <div className="metric-switch" role="tablist">
                 <button className={sortBy === "distance" ? "on" : ""} onClick={() => setSortBy("distance")}>KM</button>
                 <button className={sortBy === "time" ? "on" : ""} onClick={() => setSortBy("time")}>TIME</button>
                 <button className={sortBy === "elevation" ? "on" : ""} onClick={() => setSortBy("elevation")}>ELEV</button>
@@ -153,14 +167,14 @@ export default function StravaBoard() {
             </div>
 
             <div className="board-stats">
-              <div><strong>{club?.member_count ?? "—"}</strong><span>members</span></div>
+              <div><strong>{memberCount}</strong><span>members</span></div>
               <div><strong>{stats ? formatDistance(stats.totalDistance) : "—"}</strong><span>total km</span></div>
               <div><strong>{stats ? formatTime(stats.totalTime) : "—"}</strong><span>moving time</span></div>
               <div><strong>{stats?.totalActivities ?? "—"}</strong><span>runs</span></div>
               <div><strong>{stats ? formatElevation(stats.totalElevation) : "—"}</strong><span>elevation</span></div>
             </div>
 
-            {sortedLeaders.length > 0 ? (
+            {hasLeaders ? (
               <div className="leader-list" style={{ maxHeight: "600px", overflowY: "auto" }}>
                 <table className="leader-table" style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>

@@ -8,6 +8,7 @@ import Ritual from "./components/Ritual";
 import LocationMap from "./components/LocationMap";
 import Sponsor from "./components/Sponsor";
 import Merch from "./components/Merch";
+import Clothing from "./components/Clothing";
 import Footer from "./components/Footer";
 
 const NAV = [
@@ -16,6 +17,7 @@ const NAV = [
   { t: "Ritual", h: "#ritual" },
   { t: "Location", h: "#location" },
   { t: "Kit", h: "#kit" },
+  { t: "Clothing", h: "#clothing" },   
   { t: "Recovery", h: "#recovery" },
 ];
 
@@ -76,6 +78,7 @@ export default function App() {
         <Ritual />
         <LocationMap />
         <Sponsor />
+        <Clothing />
         <Merch />
         <Footer />
       </main>
